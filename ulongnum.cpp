@@ -18,6 +18,25 @@ Definition of routines of ulongnum class
 
 WRITE ALL CODE HERE
 -----------------------------------------------------------------*/
+void ulongnum::int2String(int n) {
+
+	while (n > 0) {
+
+		char ch = '0' + (n % 10);
+
+		_string = _string + ch;
+
+		n = n / 10;
+	}
+
+	_string.reverse();
+}
+
+void ulongnum::add() {
+
+
+}
+
 
 //EOF
 

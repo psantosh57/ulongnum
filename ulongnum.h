@@ -29,17 +29,7 @@ public:
 			cout << "In ulongnum constructor" << endl;
 		}
 
-		while (n > 0) {
-
-			char ch = '0' + (n % 10);
-
-			_string = _string + ch;
-
-			n = n / 10;
-		}
-
-		_string.reverse();
-
+		int2String(n);
 	}
 
 	ulongnum(const char* ch, bool verbose) : _string(ch, verbose), _display(verbose) {
@@ -92,14 +82,15 @@ public:
 
 		ulongnum sum(0, lhs._display);
 
-		sum._string = lhs._string + rhs._string;
+		add
 
 		return sum;
 
 	}
 
 
-
+	void int2String(int n);
+	void add();
 
 private:
   bool _display;
