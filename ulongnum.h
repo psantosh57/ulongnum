@@ -87,9 +87,35 @@ public:
 
 	}
 
+	friend ulongnum operator+(const int n, const ulongnum& rhs) {
+
+		ulongnum sum(0, rhs._display);
+
+		sum.add(n, rhs);
+		return sum;
+
+	}
+
+	friend ulongnum operator+(const ulongnum& lhs, const int n) {
+
+		ulongnum sum(0, lhs._display);
+
+		sum.add(lhs, n);
+		return sum;
+
+	}
+
+	friend bool operator==(const ulongnum& lhs, int n) {
+
+		return (lhs.compare(n));
+
+	}
 
 	void int2String(int n);
 	void add(const ulongnum& lhs, const ulongnum& rhs);
+	void add(int n, const ulongnum& rhs);
+	void add(const ulongnum& lhs, int n);
+	bool compare(int n) const;
 
 private:
   bool _display;

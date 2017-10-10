@@ -66,6 +66,7 @@ static void test_addition() {
 	cout << "sum = a + 78 + b + c = " << sum << endl;
 	assert(sum == 109874);
 }
+
 /*----------------------------------------------------------------
 test basic
 -----------------------------------------------------------------*/
@@ -124,21 +125,27 @@ static void test_factorial() {
 main
 -----------------------------------------------------------------*/
 int main() {
- // test_basic();
+  //test_basic();
   //test_addition();
   //test_multiplication();
   //test_factorial();
 
-	ulongnum a(9789, verbose);
-	ulongnum b("8", verbose);
-	ulongnum c('7', verbose);
-	cout << "a = " << a << endl;
-	cout << "b = " << b << endl;
-	cout << "c = " << c << endl;
-	//ulongnum sum = a + 78 + b + c;
-	ulongnum sum = b + c;
-	//cout << "sum = a + 78 + b + c = " << sum << endl;
-	cout << "b + c = " << sum << endl;
+#if 0
+  ulongnum a(9789, verbose);
+  ulongnum b("98", verbose);
+  ulongnum c('7', verbose);
+  cout << "a = " << a << endl;
+  cout << "b = " << b << endl;
+  cout << "c = " << c << endl;
+  //ulongnum sum = a + 78 + b + c;
+  ulongnum sum = a + 78 + b + c;
+  //cout << "sum = a + 98 + b + c = " << sum << endl;
+  cout << "  
+
+	  a + 78 + b + c = " << sum << endl;
+
+#endif 0
+
   return 0;
 }
 
