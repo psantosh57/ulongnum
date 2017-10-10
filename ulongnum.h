@@ -82,15 +82,14 @@ public:
 
 		ulongnum sum(0, lhs._display);
 
-		add
-
+		add(lhs, rhs);
 		return sum;
 
 	}
 
 
 	void int2String(int n);
-	void add();
+	friend void add(const ulongnum& lhs, const ulongnum& rhs);
 
 private:
   bool _display;

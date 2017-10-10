@@ -32,10 +32,20 @@ void ulongnum::int2String(int n) {
 	_string.reverse();
 }
 
-void ulongnum::add() {
+void add(const ulongnum& lhs, const ulongnum& rhs) {
 
+	int indLhs = lhs._string.getLength();
+	int indRhs = lhs._string.getLength();
+
+	cout << "Lhs = " << indLhs << endl;
+	cout << "Rhs = " << indRhs << endl;
+
+	int carry = 0;
+	//int lhs = lhs._string[indLhs] - '0';
 
 }
+
+
 
 
 //EOF
