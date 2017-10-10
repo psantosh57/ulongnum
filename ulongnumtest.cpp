@@ -130,7 +130,7 @@ int main() {
   //test_factorial();
 
 	ulongnum a(9789, verbose);
-	ulongnum b("100000", verbose);
+	ulongnum b("8", verbose);
 	ulongnum c('7', verbose);
 	cout << "a = " << a << endl;
 	cout << "b = " << b << endl;
