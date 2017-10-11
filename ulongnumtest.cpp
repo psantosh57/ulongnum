@@ -32,7 +32,7 @@ CANNOT CHANGE ANYTHING IN THIS FILE
 /*----------------------------------------------------------------
 test multiplication
 -----------------------------------------------------------------*/
-#if 0
+
 static void test_multiplication() {
 	ulongnum a(789, verbose);
 	cout << "a = " << a << endl;
@@ -51,7 +51,7 @@ static void test_multiplication() {
 	cout << "p1p2 = " << p1p2 << endl;
 	assert(p1p2 == rsa129);
 }
-
+#if 0
 /*----------------------------------------------------------------
 test addition
 -----------------------------------------------------------------*/
@@ -127,7 +127,7 @@ main
 int main() {
   //test_basic();
   //test_addition();
-  //test_multiplication();
+  test_multiplication();
   //test_factorial();
 
 #if 0
@@ -144,7 +144,7 @@ int main() {
 
 	  a + 78 + b + c = " << sum << endl;
 
-#endif 0
+
 
   ulongnum a(789, verbose);
   cout << "a = " << a << endl;
@@ -152,6 +152,7 @@ int main() {
   cout << "b = " << b << endl;
   ulongnum ans = a * b;
   cout << "ans = " << ans << endl;
+#endif 0
 
   return 0;
 }

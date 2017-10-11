@@ -111,6 +111,13 @@ public:
 
 	}
 
+	friend bool operator==(const ulongnum& lhs, const ulongnum& rhs) {
+
+		return (lhs.compare(rhs));
+
+	}
+
+
 	friend ulongnum operator*(const ulongnum& lhs, const ulongnum& rhs) {
 
 		ulongnum result(0, lhs._display);
@@ -125,6 +132,7 @@ public:
 	void add(int n, const ulongnum& rhs);
 	void add(const ulongnum& lhs, int n);
 	bool compare(int n) const;
+	bool compare(const ulongnum& rhs) const;
 	void mult(const ulongnum& lhs, const ulongnum& rhs);
 
 private:

@@ -259,7 +259,7 @@ void ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 		while (indLhs >= 0) {
 
 			int u1 = lhs._string.getChar(indLhs) - '0';
-			int result = (u1*u2) + carry;
+			result = (u1*u2) + carry;
 			carry = result / 10;
 			result = result % 10;
 			char ch = '0' + result;
@@ -267,6 +267,15 @@ void ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 			indLhs--;
 
 		}
+
+		if (carry) {
+
+			char ch = '0' + carry;
+			temp._string = temp._string + ch;
+			carry = 0;
+
+		}
+		
 
 		temp._string.reverse();
 		*this = *this + temp;
@@ -279,7 +288,11 @@ void ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 
 }
 
+bool ulongnum::compare(const ulongnum& rhs) const {
 
+	return (_string == rhs._string);
+
+}
 
 //EOF
 
