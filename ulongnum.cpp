@@ -237,6 +237,47 @@ bool ulongnum::compare(int n) const {
 
 }
 
+void ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
+
+	int indLhs = lhs._string.getLength() - 1;
+	int indRhsMax = rhs._string.getLength() - 1;
+	int indRhs = indRhsMax;
+
+	int carry = 0;
+	int result = 0;
+
+	while (indRhs >= 0) {
+
+		int u2 = rhs._string.getChar(indRhs) - '0';
+		ulongnum temp(0, true);
+		for (int i = indRhsMax; i > indRhs; --i) {
+
+			temp._string = temp._string + '0';
+
+		}
+		
+		while (indLhs >= 0) {
+
+			int u1 = lhs._string.getChar(indLhs) - '0';
+			int result = (u1*u2) + carry;
+			carry = result / 10;
+			result = result % 10;
+			char ch = '0' + result;
+			temp._string = temp._string + ch;
+			indLhs--;
+
+		}
+
+		temp._string.reverse();
+		*this = *this + temp;
+		indRhs--;
+		indLhs = lhs._string.getLength() - 1;
+	}
+
+	//_string.reverse();
+
+
+}
 
 
 

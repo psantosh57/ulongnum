@@ -146,6 +146,13 @@ int main() {
 
 #endif 0
 
+  ulongnum a(789, verbose);
+  cout << "a = " << a << endl;
+  ulongnum b("56", verbose);
+  cout << "b = " << b << endl;
+  ulongnum ans = a * b;
+  cout << "ans = " << ans << endl;
+
   return 0;
 }
 

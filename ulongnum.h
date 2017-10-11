@@ -111,11 +111,21 @@ public:
 
 	}
 
+	friend ulongnum operator*(const ulongnum& lhs, const ulongnum& rhs) {
+
+		ulongnum result(0, lhs._display);
+
+		result.mult(lhs, rhs);
+
+		return result;
+	}
+
 	void int2String(int n);
 	void add(const ulongnum& lhs, const ulongnum& rhs);
 	void add(int n, const ulongnum& rhs);
 	void add(const ulongnum& lhs, int n);
 	bool compare(int n) const;
+	void mult(const ulongnum& lhs, const ulongnum& rhs);
 
 private:
   bool _display;
