@@ -122,7 +122,7 @@ public:
 
 		ulongnum result(0, lhs._display);
 
-		result.mult(lhs, rhs);
+		result.multAlgo(lhs, rhs);
 
 		return result;
 	}
@@ -134,6 +134,9 @@ public:
 	bool compare(int n) const;
 	bool compare(const ulongnum& rhs) const;
 	void mult(const ulongnum& lhs, const ulongnum& rhs);
+	ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs);
+	int getLen() { return _string.getLength(); };
+	//void compute(int num);
 
 private:
   bool _display;
@@ -144,7 +147,12 @@ private:
   //must use str object
 
   //Can have any private functions here
+
+  
+
 };
+
+
 
 #endif
 //EOF

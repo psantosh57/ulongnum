@@ -127,7 +127,7 @@ main
 int main() {
   //test_basic();
   //test_addition();
-  test_multiplication();
+  //test_multiplication();
   //test_factorial();
 
 #if 0
@@ -144,15 +144,14 @@ int main() {
 
 	  a + 78 + b + c = " << sum << endl;
 
+#endif 0
 
-
-  ulongnum a(789, verbose);
+  ulongnum a(1234, verbose);
   cout << "a = " << a << endl;
-  ulongnum b("56", verbose);
+  ulongnum b("4321", verbose);
   cout << "b = " << b << endl;
   ulongnum ans = a * b;
   cout << "ans = " << ans << endl;
-#endif 0
 
   return 0;
 }

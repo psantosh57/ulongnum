@@ -12,6 +12,7 @@ This file has class definition
 All includes here
 -----------------------------------------------------------------*/
 #include "ulongnum.h"
+static bool verbose = true;
 /*----------------------------------------------------------------
 
 Definition of routines of ulongnum class
@@ -293,6 +294,80 @@ bool ulongnum::compare(const ulongnum& rhs) const {
 	return (_string == rhs._string);
 
 }
+
+
+ulongnum ulongnum::multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
+
+	int indLhs = lhs._string.getLength();
+	int indRhs = rhs._string.getLength();
+	int midLhs = indLhs / 2;
+	int midRhs = indRhs / 2;
+
+	ulongnum temp1(0, verbose);
+	ulongnum temp2(0, verbose);
+	ulongnum temp3(0, verbose);
+	ulongnum temp4(0, verbose);
+
+	temp1._string.buildString(lhs._string, 0, (midLhs - 1));
+	temp2._string.buildString(lhs._string, midLhs, (indLhs-1));
+	temp3._string.buildString(rhs._string, 0, (midRhs - 1));
+	temp4._string.buildString(rhs._string, midRhs, (indRhs - 1));
+	int lenTemp1 = temp1.getLen();
+	int lenTemp2 = temp2.getLen();
+	int lenTemp3 = temp3.getLen();
+	int lenTemp4 = temp4.getLen();
+
+	cout << temp1._string << endl;
+	cout << temp2._string << endl;
+	cout << temp3._string << endl;
+	cout << temp4._string << endl;
+
+	if (((lenTemp1 == 1 && lenTemp2 == 2) || (lenTemp1 == 2 && lenTemp2 == 1)) && ((lenTemp3 == 1 && lenTemp4 == 2) || (lenTemp3 == 2 && lenTemp4 == 1)) ||) {
+		cout << "Reached final stage, now computing!" << endl;
+		int n = 2;
+		
+		int b2m = pow(10, 2 * n);
+		int bm = pow(10, n);
+		ulongnum z2(b2m, true);
+		ulongnum z1(bm, true);
+		ulongnum product(0, true);
+		product.mult(temp1, temp3);
+		ulongnum a(0, verbose);
+		ulongnum b3(0, verbose);
+		ulongnum b1(0, verbose);
+		ulongnum b2(0, verbose);
+		ulongnum b(0, verbose);
+		ulongnum c(0, verbose);
+		a.mult(product, z2);
+		b1.mult(temp1, temp4);
+		b2.mult(temp2, temp3);
+		b3 = b1 + b2;
+		b.mult(b3,z1);
+		c.mult(temp2, temp4);
+
+		//ulongnum answer(0, verbose);
+		*this = a + b + c;
+
+		return *this;
+
+
+	}
+	else {
+
+		ulongnum XhYh = multAlgo(temp1, temp3);
+		ulongnum XhYl = multAlgo(temp1, temp4);
+		ulongnum XlYh = multAlgo(temp2, temp3);
+		ulongnum XlYl = multAlgo(temp2, temp4);
+
+
+
+	}
+
+	//return 1;
+
+}
+
+
 
 //EOF
 
