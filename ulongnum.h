@@ -22,7 +22,7 @@ class ulongnum {
 public:
   //WRITE CODE HERE
 
-	ulongnum(int n, bool verbose) : _string("", verbose), _display(verbose) {
+	ulongnum(int n, bool verbose) : _string("", verbose), _display(verbose), _set(false) {
 
 		if (_display) {
 
@@ -122,7 +122,7 @@ public:
 
 		ulongnum result(0, lhs._display);
 
-		result.multAlgo(lhs, rhs);
+		result = result.multAlgo(lhs, rhs);
 
 		return result;
 	}
@@ -141,6 +141,7 @@ public:
 private:
   bool _display;
   str _string;
+  bool _set;
 
 
   //Cannot use any STL object
