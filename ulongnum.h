@@ -32,7 +32,7 @@ public:
 		int2String(n);
 	}
 
-	ulongnum() : _string("1", true), _display(true), _set(true) {
+	ulongnum() : _string("1", true), _display(true), _set(false) {
 
 		if (_display) {
 
@@ -90,7 +90,7 @@ public:
 
 	friend ulongnum operator+(const ulongnum& lhs, const ulongnum& rhs) {
 
-		ulongnum sum(0, lhs._display);
+		ulongnum sum("", lhs._display);
 
 		sum.add(lhs, rhs);
 		return sum;
@@ -143,8 +143,8 @@ public:
 
 		ulongnum result(0, lhs._display);
 
-		result = multAlgo(lhs, rhs);
-		//result.mult(lhs, rhs);
+		//result = multAlgo(lhs, rhs);
+		result.mult(lhs, rhs);
 
 		return result;
 	}

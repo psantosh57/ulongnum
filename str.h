@@ -189,7 +189,7 @@ public:
 		int index = (sum._strlen - 1);
 		sum._string[index++] = ch;
 		sum._string[index] = '\0';
-		
+
 		return sum;
 
 	}
@@ -235,6 +235,7 @@ public:
 	void setCharAtIndex(int index, const char ch);
 	void stripZeros();
 	bool ifZero();
+	void insertZeros(int index);
 
 
 private:

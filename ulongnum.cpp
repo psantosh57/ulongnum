@@ -60,13 +60,22 @@ void ulongnum::add(const ulongnum& lhs, const ulongnum& rhs) {
 		indLhs--;
 		indRhs--;
 		char ch = '0' + result;
-		if (_string.getLength() == 1 && _string.getChar(0) == '0' && !this->_set) {
+		_string = _string + ch;
+
+#if 0
+		if (!this->_set) {
 			_string.setCharAtIndex(0, ch);
 			this->_set = true;
 		}
 		else {
 			_string = _string + ch;
 		}
+#endif // 0
+
+
+
+
+
 	}
 
 	if (indRhs < 0 && indLhs >= 0) {
@@ -263,52 +272,63 @@ bool ulongnum::compare(int n) const {
 ulongnum ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 
 	int indLhs = lhs._string.getLength() - 1;
-	int indRhsMax = rhs._string.getLength() - 1;
+	int indRhs = rhs._string.getLength() - 1;
 	int indLhsMax = indLhs;
-	int indRhs = indRhsMax;
+	int indRhsMax = indRhs;
 	int carry = 0;
 	int result = 0;
 
 	if (indRhs < indLhs) {
 
+		int u2 = 0;
+
 		while (indRhs >= 0) {
+			if (indRhs > 0) {
 
-			int u2 = rhs._string.getChar(indRhs) - '0';
-			ulongnum temp(0, true);
+				u2 = (rhs._string.getChar(indRhs - 1) - '0') * 10 + (rhs._string.getChar(indRhs) - '0');
+
+			}
+			else {
+				
+				u2 = rhs._string.getChar(indRhs) - '0';
+
+			}
+			
+
+			//int u2 = rhs._string.getChar(indRhs) - '0';
+			ulongnum temp("", verbose);
+			char charAtZero = temp._string.getChar(0);
 			for (int i = indRhsMax; i > indRhs; --i) {
-
-				if (temp._string.getLength() == 1 && temp._string.getChar(0) == '0' && !temp._set) {
-					temp._string.setCharAtIndex(0, '0');
-					temp._set = true;
-				}
-				else {
-
-					temp._string = temp._string + '0';
-				}
+				temp._string = temp._string + '0';
 
 			}
 
 			while (indLhs >= 0) {
 
+				//int u1 = (lhs._string.getChar(indLhs - 1) - '0') * 10 + (lhs._string.getChar(indLhs) - '0');
 				int u1 = lhs._string.getChar(indLhs) - '0';
 				result = (u1*u2) + carry;
 				carry = result / 10;
 				result = result % 10;
-				char ch = '0' + result;
-				if (temp._string.getLength() == 1 && temp._string.getChar(0) == '0' && !temp._set) {
-					temp._string.setCharAtIndex(0, ch);
-					temp._set = true;
-				}
-				else {
-					temp._string = temp._string + ch;
-				}
-
+				//char ch = '0' + result;
+				temp._string = temp._string + ('0' + result);
 				indLhs--;
+				//indLhs-=2;
 				
 
 			}
 
-			if (carry) {
+			if (carry > 10) {
+
+				while (carry > 0) {
+
+					char ch = '0' + (carry % 10);
+					temp._string = temp._string + ch;
+					carry = carry / 10;
+
+				}
+			}
+			else if (carry) {
 
 				char ch = '0' + carry;
 				temp._string = temp._string + ch;
@@ -318,10 +338,12 @@ ulongnum ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 
 			temp._string.reverse();
 			*this = *this + temp;
-			indRhs--;
-			indLhs = lhs._string.getLength() - 1;
+			//indRhs--;
+			indRhs-=2;
+			indLhs = indLhsMax;
 		}
 
+		//this->_string.stripZeros();
 		return *this;
 
 	}
@@ -329,18 +351,25 @@ ulongnum ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 
 		while (indLhs >= 0) {
 
-			int u2 = lhs._string.getChar(indLhs) - '0';
-			ulongnum temp(0, true);
+			int u2 = 0;
+
+			if (indLhs > 0) {
+
+				u2 = (lhs._string.getChar(indLhs - 1) - '0') * 10 + (lhs._string.getChar(indLhs) - '0');
+			}
+			else {
+				
+				u2 = lhs._string.getChar(indLhs) - '0';
+
+			}
+			
+			//int u2 = lhs._string.getChar(indLhs) - '0';
+			ulongnum temp("", verbose);
+			char charAtZero = temp._string.getChar(0);
 			for (int i = indLhsMax; i > indLhs; --i) {
 
-				if (temp._string.getLength() == 1 && temp._string.getChar(0) == '0' && !temp._set) {
-					temp._string.setCharAtIndex(0, '0');
-					temp._set = true;
-				}
-				else {
+				temp._string = temp._string + '0';
 
-					temp._string = temp._string + '0';
-				}
 			}
 
 			while (indRhs >= 0) {
@@ -349,35 +378,41 @@ ulongnum ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 				result = (u1*u2) + carry;
 				carry = result / 10;
 				result = result % 10;
-				char ch = '0' + result;
-				if (temp._string.getLength() == 1 && temp._string.getChar(0) == '0' && !temp._set) {
-					temp._string.setCharAtIndex(0, ch);
-					temp._set = true;
-				}
-				else {
-					temp._string = temp._string + ch;
-				}
-
-
+				//char ch = '0' + result;
+				temp._string = temp._string + ('0' + result);
 				indRhs--;
 
 
 			}
 
-			if (carry) {
+				if (carry > 10) {
 
-				char ch = '0' + carry;
-				temp._string = temp._string + ch;
-				carry = 0;
+					while (carry > 0) {
 
-			}
+						char ch = '0' + (carry % 10);
+						temp._string = temp._string + ch;
+						carry = carry / 10;
+
+					}
+				}
+				else if (carry) {
+
+					char ch = '0' + carry;
+					temp._string = temp._string + ch;
+					carry = 0;
+
+				}
+
 
 			temp._string.reverse();
 			*this = *this + temp;
-			indLhs--;
-			indRhs = rhs._string.getLength() - 1;
+
+			indLhs -= 2;
+			//indLhs--;
+			indRhs = indRhsMax;
 		}
 
+		//this->_string.stripZeros();
 		return *this;
 
 	}
@@ -404,10 +439,9 @@ ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 	int indLhs = lhs1._string.getLength();
 	int indRhs = rhs1._string.getLength();
 
-	if (indLhs <= 10 && indRhs <= 10) {
-		ulongnum temp(0, false);
-		temp = temp.mult(lhs1, rhs1);
-		temp._string.stripZeros();
+	if (indLhs <= 14 && indRhs <= 14) {
+		ulongnum temp("", verbose);
+		temp.mult(lhs1, rhs1);
 		return temp;
 
 	}
@@ -419,53 +453,43 @@ ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 		//To make strings of equal length
 		if (indLhs < indRhs) {
 
-			lhs1._string.reverse();
 			int i = indLhs;
 			while (i < indRhs) {
 
-				lhs1._string = lhs1._string + '0';
+				lhs1._string = '0' + lhs1._string;
 				i++;
 			}
 			indLhs = i;
-			lhs1._string.reverse();
 
 		}
 		else if (indRhs < indLhs) {
 
-			rhs1._string.reverse();
 			int i = indRhs;
 			while (i < indLhs) {
 
-				rhs1._string = rhs1._string + '0';
+				rhs1._string = '0' + rhs1._string;
 				i++;
 			}
 			indRhs = i;
-			rhs1._string.reverse();
 
 		}
 
 
 		//To make strings of even length
 		if (indLhs % 2 != 0) {
-			lhs1._string.reverse();
-			lhs1._string = lhs1._string + '0';
+			
+			lhs1._string = '0' + lhs1._string;
 			indLhs++;
-			lhs1._string.reverse();
-		}
-
-		if (indRhs % 2 != 0) {
-			rhs1._string.reverse();
-			rhs1._string = rhs1._string + '0';
+		
+			rhs1._string = '0' + rhs1._string;
 			indRhs++;
-			rhs1._string.reverse();
+
 		}
 
-		//int midRhs = indRhs / 2;
-		//n = mid;
-		ulongnum temp1(0, verbose);
-		ulongnum temp2(0, verbose);
-		ulongnum temp3(0, verbose);
-		ulongnum temp4(0, verbose);
+		ulongnum temp1("", verbose);
+		ulongnum temp2("", verbose);
+		ulongnum temp3("", verbose);
+		ulongnum temp4("", verbose);
 
 		temp1._string.buildString(lhs1._string, 0, (mid - 1));
 		temp2._string.buildString(lhs1._string, n, (indLhs - 1));
@@ -480,12 +504,12 @@ ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 		//Base case of recursive function - when len = 2, use default mult
 
 		//Call this function recursively
-		 ulongnum XhYh(0, verbose);		    
-		ulongnum XhYl(0, verbose);			
-		ulongnum XlYh(0, verbose);			
-		ulongnum XlYl(0, verbose);			
-		ulongnum b1(0, verbose);
-		ulongnum product(0, verbose);
+		 ulongnum XhYh("", verbose);
+		ulongnum XhYl("", verbose);			
+		ulongnum XlYh("", verbose);			
+		ulongnum XlYl("", verbose);			
+		ulongnum b1("", verbose);
+		ulongnum product("", verbose);
 
 		XhYh = multAlgo(temp1, temp3);
 		XhYl = multAlgo(temp1, temp4);
@@ -556,7 +580,7 @@ void preMult(ulongnum& lhs, ulongnum& rhs) {
 			i++;
 		}
 		indRhs = i;
-		rhs._string.reverse();
+		rhs._string.reverse(); 
 
 	}
 
