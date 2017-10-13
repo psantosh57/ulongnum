@@ -209,10 +209,30 @@ public:
 
 	}
 
+	friend str operator+(const str& lhs, const str& rhs) {
+
+		str sum(lhs._string);
+		sum._strlen += rhs._strlen;
+		//sum._string = sum._string + rhs._string;
+		int index = lhs._strlen;
+		int count = 0;
+		while (rhs._string[count] != '\0') {
+			sum._string[index++] = rhs._string[count++];
+		}
+		sum._string[index] = '\0';
+
+
+
+		return sum;
+
+	}
+
 	void reverse();
 	int friend string_compare(const str& lhs, const str& rhs);
 	int getLength() const;
 	char getChar(int index) const;
+	void buildString(const str& s, int startInd, int endInd);
+	void setCharAtIndex(int index, const char ch);
 
 
 

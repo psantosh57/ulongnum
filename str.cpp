@@ -71,6 +71,26 @@ char str::getChar(int index) const {
 	return _string[index];
 }
 
+void str::buildString(const str& s, int startInd, int endInd) {
+
+	int index = startInd;
+	_strlen = (endInd - startInd) + 1;
+	while (index <= endInd) {
+
+		_string[(index-startInd)] = s._string[index];
+		index++;
+	}
+
+	_string[index-startInd] = '\0';
+
+
+}
+
+void str::setCharAtIndex(int index, const char ch) {
+
+	_string[index] = ch;
+}
+
 //EOF
 
 
