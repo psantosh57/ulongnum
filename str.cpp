@@ -91,6 +91,38 @@ void str::setCharAtIndex(int index, const char ch) {
 	_string[index] = ch;
 }
 
+void str::stripZeros() {
+
+	//int count = 0;
+	reverse();
+	int i = _strlen-1;
+	while (i >= 0 && _string[i] == '0') {
+		i--;
+		//_strlen--;
+	}
+	_strlen = i + 1;
+
+	reverse();
+
+	_string[_strlen] = '\0';
+
+	
+}
+
+bool str::ifZero() {
+
+	int i = 0;
+	while (_string[i] != '\0') {
+		if (_string[i] != '0') {
+			return false;
+		}
+		i++;
+	}
+
+	return true;
+
+}
+
 //EOF
 
 

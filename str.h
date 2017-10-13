@@ -233,7 +233,8 @@ public:
 	char getChar(int index) const;
 	void buildString(const str& s, int startInd, int endInd);
 	void setCharAtIndex(int index, const char ch);
-
+	void stripZeros();
+	bool ifZero();
 
 
 private:
