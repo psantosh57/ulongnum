@@ -22,7 +22,7 @@ class ulongnum {
 public:
   //WRITE CODE HERE
 
-	ulongnum(int n, bool verbose) : _string("", verbose), _display(verbose), _set(false) {
+	ulongnum(int n, bool verbose = false) : _string("", verbose), _display(verbose), _set(false) {
 
 		if (_display) {
 
@@ -30,6 +30,16 @@ public:
 		}
 
 		int2String(n);
+	}
+
+	ulongnum() : _string("1", true), _display(true), _set(true) {
+
+		if (_display) {
+
+			cout << "In default constructor" << endl;
+		}
+
+
 	}
 
 	ulongnum(const char* ch, bool verbose) : _string(ch, verbose), _display(verbose) {
@@ -117,12 +127,25 @@ public:
 
 	}
 
+	friend bool operator==(const ulongnum& lhs, const char* ch) {
 
-	friend ulongnum operator*(const ulongnum& lhs, const ulongnum& rhs) {
+
+	}
+
+	friend bool operator!=(const ulongnum& lhs, const ulongnum& rhs) {
+
+		return (!lhs.compare(rhs));
+
+	}
+
+	friend ulongnum operator*(ulongnum& lhs, ulongnum& rhs) {
 
 		ulongnum result(0, lhs._display);
 
-		result = result.multAlgo(lhs, rhs);
+		//preMult(lhs, rhs);
+
+		result = multAlgo(lhs, rhs);
+		//result.mult(lhs, rhs);
 
 		return result;
 	}
@@ -133,10 +156,16 @@ public:
 	void add(const ulongnum& lhs, int n);
 	bool compare(int n) const;
 	bool compare(const ulongnum& rhs) const;
-	void mult(const ulongnum& lhs, const ulongnum& rhs);
-	ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs);
+	bool compare(const char* ch) const;
+	ulongnum mult(const ulongnum& lhs, const ulongnum& rhs);
+	friend ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs);
 	int getLen() { return _string.getLength(); };
 	//void compute(int num);
+	ulongnum factorial(ulongnum n);
+	void set_display(bool val) {  _display = val; };
+	void addZeros(int limit);
+	friend void preMult(ulongnum& lhs, ulongnum& rhs);
+	//void stripZeros();
 
 private:
   bool _display;

@@ -264,11 +264,11 @@ bool ulongnum::compare(int n) const {
 
 }
 
-void ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
+ulongnum ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 
 	int indLhs = lhs._string.getLength() - 1;
 	int indRhsMax = rhs._string.getLength() - 1;
-	int indLhsMax = lhs._string.getLength() - 1;
+	int indLhsMax = indLhs;
 	int indRhs = indRhsMax;
 	//ulongnum temp(0, true);
 	int carry = 0;
@@ -327,6 +327,8 @@ void ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 			indLhs = lhs._string.getLength() - 1;
 		}
 
+		return *this;
+
 	}
 	else {
 
@@ -381,6 +383,8 @@ void ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 			indRhs = rhs._string.getLength() - 1;
 		}
 
+		return *this;
+
 	}
 
 }
@@ -392,241 +396,257 @@ bool ulongnum::compare(const ulongnum& rhs) const {
 }
 
 
-ulongnum ulongnum::multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
-
-	ulongnum temp1(0, verbose);
-	ulongnum temp2(0, verbose);
-	ulongnum temp3(0, verbose);
-	ulongnum temp4(0, verbose);
-
-	int indLhs = lhs._string.getLength();
-	int indRhs = rhs._string.getLength();
-	int midLhs = indLhs / 2;
-	int midRhs = indRhs / 2;
-	int n = 0;
-
-	if (indLhs != indRhs) {
-
-		if ((indLhs % 2 != 0) || (indRhs % 2 != 0)) {
-
-			if (indLhs <= indRhs) {
-
-				n = midRhs + 1;
-				temp3._string.buildString(rhs._string, 0, (midRhs - 1));
-				temp4._string.buildString(rhs._string, midRhs, (indRhs - 1));
-				if (indLhs <= n) {
-					//ex - 56*12345 - dont need temp1 (0), temp2 = 56, temp3 = 12, temp4 = 345
-					temp2._string.buildString(lhs._string, 0, (indLhs - 1));
-				}
-				else {
-
-					temp1._string.buildString(lhs._string, 0, (midLhs - 1));
-					temp2._string.buildString(lhs._string, midLhs, (indLhs - 1));
-				}
-
-			}
-			else {
-
-				n = midLhs + 1;
-				temp1._string.buildString(lhs._string, 0, (midLhs - 1));
-				temp2._string.buildString(lhs._string, midLhs, (indLhs - 1));
-				if (indRhs <= n) {
-					//ex - 12345*56 - dont need temp3(0), temp1 = 12, temp2 = 345, temp4 = 56
-					temp4._string.buildString(rhs._string, 0, (indRhs - 1));
-				}
-				else {
-
-					temp3._string.buildString(rhs._string, 0, (midRhs - 1));
-					temp4._string.buildString(rhs._string, midRhs, (indRhs - 1));
-
-				}
-
-				
-			}
-
-		}
-
-	}
-
+ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 	
+	ulongnum lhs1(lhs);
+	ulongnum rhs1(rhs);
 
-	
+	if (lhs1._string.ifZero() || rhs1._string.ifZero()) {
 
-#if 0
-	if (indLhs <= midRhs) {
-
-		temp2._string.buildString(lhs._string, 0, (indLhs - 1));
-		n = midRhs;
-
-	}
-	else if (indRhs <= midLhs) {
-
-		temp4._string.buildString(rhs._string, 0, (indRhs - 1));
-		n = midLhs;
-
-	}
-	else if ((indLhs > midRhs) && indRhs == 3) {
-
-
-
+		return 0;
 	}
 
+	int indLhs = lhs1._string.getLength();
+	int indRhs = rhs1._string.getLength();
 
-	else {
-
-		temp1._string.buildString(lhs._string, 0, (midLhs - 1));
-		temp2._string.buildString(lhs._string, midLhs, (indLhs - 1));
-		temp3._string.buildString(rhs._string, 0, (midRhs - 1));
-		temp4._string.buildString(rhs._string, midRhs, (indRhs - 1));
-
-
-	}
-
-#endif // 0
-
-	int lenTemp1 = temp1.getLen();
-	int lenTemp2 = temp2.getLen();
-	int lenTemp3 = temp3.getLen();
-	int lenTemp4 = temp4.getLen();
-
-	cout << temp1._string << endl;
-	cout << temp2._string << endl;
-	cout << temp3._string << endl;
-	cout << temp4._string << endl;
-
-	bool lhsAll1 = false;
-	bool rhsAll1 = false;
-	bool all1 = false;
-	bool lhs1Or2 = false;
-	bool rhs1Or2 = false;
-	bool lhs1Or2AndRhs1 = false;
-	bool rhs1Or2AndLhs1 = false;
-	bool lhs1Or2AndRhs1Or2 = false;
-
-	if ((lenTemp1 == lenTemp2 == 1)) {
-
-		lhsAll1 = true;
-	}
-
-	if ((lenTemp3 == lenTemp4 == 1)) {
-
-		rhsAll1 = true;
-
-	}
-
-	if (lhsAll1 && rhsAll1) {
-
-		all1 = true;
-		n = 1;
-	}
-
-	if ((lenTemp1 == 1 && lenTemp2 == 2) || (lenTemp1 == 2 && lenTemp2 == 1)) {
-
-		lhs1Or2 = true;
-
-	}
-
-	if ((lenTemp3 == 1 && lenTemp4 == 2) || (lenTemp3 == 2 && lenTemp4 == 1)) {
-
-		rhs1Or2 = true;
-
-	}
-
-	if (lhs1Or2 && rhsAll1) {
-
-		lhs1Or2AndRhs1 = true;
-		n = 2;
-	}
-
-	if (rhs1Or2 && lhsAll1) {
-
-		rhs1Or2AndLhs1 = true;
-		n = 2;
-	}
-
-	if (rhs1Or2 && lhs1Or2) {
-
-		lhs1Or2AndRhs1Or2 = true;
-		n = 2;
-	}
-
-
-
-
-	if (lhs1Or2AndRhs1 || rhs1Or2AndLhs1 || all1 || lhs1Or2AndRhs1Or2) {
-		cout << "Reached final stage, now computing!" << endl;
-		
-#if 0
-		if (!all1) {
-
-			n = 2;
-
-		}
-#endif // 0
-
-		
-		
-		int b2m = pow(10, (2 * n));
-		int bm = pow(10, n);
-		ulongnum z2(b2m, true);
-		ulongnum z1(bm, true);
-		ulongnum product(0, true);
-		product.mult(temp1, temp3);
-		ulongnum a(0, verbose);
-		ulongnum b3(0, verbose);
-		ulongnum b1(0, verbose);
-		ulongnum b2(0, verbose);
-		ulongnum b(0, verbose);
-		ulongnum c(0, verbose);
-		a.mult(product, z2);
-		b1.mult(temp1, temp4);
-		b2.mult(temp2, temp3);
-		b3 = b1 + b2;
-		b.mult(b3,z1);
-		c.mult(temp2, temp4);
-
-		//ulongnum answer(0, verbose);
-		*this = a + b + c;
-
-		return *this;
-
+	if (indLhs <= 4 && indRhs <= 4) {
+		ulongnum temp(0, false);
+		temp = temp.mult(lhs1, rhs1);
+		temp._string.stripZeros();
+		return temp;
 
 	}
 	else {
+		int mid = 0;
+		(indLhs > indRhs) ? mid = ((indLhs + 1) / 2) : mid = ((indRhs + 1) / 2);
+		//int midLhs = (indLhs + 1) / 2;
+		//int midRhs = (indRhs + 1) / 2;
+		int n = mid;
 
-		n = lenTemp1;
+		//To make strings of equal length
+		if (indLhs < indRhs) {
 
-		int b2m = pow(10, 2 * n);
-		int bm = pow(10, n);
+			lhs1._string.reverse();
+			int i = indLhs;
+			while (i < indRhs) {
 
-		ulongnum XhYh = multAlgo(temp1, temp3);
-		ulongnum XhYl = multAlgo(temp1, temp4);
-		ulongnum XlYh = multAlgo(temp2, temp3);
-		ulongnum XlYl = multAlgo(temp2, temp4);
-		ulongnum a(0, verbose);
-		ulongnum b3(0, verbose);
-		ulongnum b1(0, verbose);
-		ulongnum b2(0, verbose);
-		ulongnum b(0, verbose);
-		ulongnum c(0, verbose);
-		ulongnum z2(b2m, true);
-		ulongnum z1(bm, true);
-		ulongnum product(0, true);
+				lhs1._string = lhs1._string + '0';
+				i++;
+			}
+			indLhs = i;
+			lhs1._string.reverse();
 
-		a.mult(XhYh, z2);
-		b1 = XhYl + XlYh;
-		b2.mult(b1, z1);
-		
-		product = a + b2 + XlYl;
+		}
+		else if (indRhs < indLhs) {
 
-		return product;
+			rhs1._string.reverse();
+			int i = indRhs;
+			while (i < indLhs) {
+
+				rhs1._string = rhs1._string + '0';
+				i++;
+			}
+			indRhs = i;
+			rhs1._string.reverse();
+
+		}
+
+
+		//To make strings of even length
+		if (indLhs % 2 != 0) {
+			lhs1._string.reverse();
+			lhs1._string = lhs1._string + '0';
+			indLhs++;
+			lhs1._string.reverse();
+		}
+
+		if (indRhs % 2 != 0) {
+			rhs1._string.reverse();
+			rhs1._string = rhs1._string + '0';
+			indRhs++;
+			rhs1._string.reverse();
+		}
+
+		//int midRhs = indRhs / 2;
+		//n = mid;
+		ulongnum temp1(0, verbose);
+		ulongnum temp2(0, verbose);
+		ulongnum temp3(0, verbose);
+		ulongnum temp4(0, verbose);
+
+		temp1._string.buildString(lhs1._string, 0, (mid - 1));
+		temp2._string.buildString(lhs1._string, n, (indLhs - 1));
+		temp3._string.buildString(rhs1._string, 0, (mid - 1));
+		temp4._string.buildString(rhs1._string, n, (indRhs - 1));
+
+		int lenTemp1 = temp1._string.getLength();
+		int lenTemp2 = temp1._string.getLength();
+		int lenTemp3 = temp1._string.getLength();
+		int lenTemp4 = temp1._string.getLength();
+
+		//Base case of recursive function - when len = 2, use default mult
+#if 0
+		if (lenTemp1 <= 4) {
+
+			//ulongnum product(0, verbose);
+			ulongnum a(0, verbose);
+			ulongnum b1(0, verbose);
+			ulongnum b2(0, verbose);
+			ulongnum b(0, verbose);
+			ulongnum c(0, verbose);
+
+			a.mult(temp1, temp3);
+			a.addZeros((2 * n));
+			b1.mult(temp1, temp4);
+			b2.mult(temp2, temp3);
+			b = b1 + b2;
+			b.addZeros(n);
+			c.mult(temp2, temp4);
+
+			//product = a + b + c;
+			//product._string.stripZeros();
+
+			*this = a + b + c;
+			_string.stripZeros();
+
+			return *this;
+		}
+#endif // 0
+
+		//else {
+
+			//Call this function recursively
+		    ulongnum XhYh(0, verbose);		    
+			ulongnum XhYl(0, verbose);			
+			ulongnum XlYh(0, verbose);			
+			ulongnum XlYl(0, verbose);			
+			ulongnum b1(0, verbose);
+			ulongnum product(0, verbose);
+
+			XhYh = multAlgo(temp1, temp3);
+			XhYl = multAlgo(temp1, temp4);
+			XlYh = multAlgo(temp2, temp3);
+			XlYl = multAlgo(temp2, temp4);
+
+			XhYh.addZeros((2 * n));
+			b1 = XhYl + XlYh;
+			b1.addZeros(n);
+
+			product = XhYh + b1 + XlYl;
+			product._string.stripZeros();
+			return product;
+
+		//}
 
 	}
-
-	//return 1;
 
 }
 
+ulongnum ulongnum::factorial(ulongnum n) {
+
+
+#if 0
+	if (*this == n) {
+
+		return *this;
+	}
+	else {
+		ulongnum temp = (*this + 1);
+		*this = *this*temp.factorial(temp);
+	}
+#endif // 0
+	ulongnum temp(*this+1);
+	while (temp != (n+1)) {
+		*this = *this*temp;
+		temp = temp + 1;
+	}
+
+	return *this;
+
+}
+
+void ulongnum::addZeros(int limit) {
+
+	int i = 0;
+	while (i < limit) {
+		_string = _string + '0';
+		i++;
+	}
+
+}
+
+#if 0
+void ulongnum::stripZeros() {
+
+	int count = 0;
+	_string.reverse();
+	int i = _string.getLength();
+	while (_string.getChar(i - 1) == '0') {
+
+		count++;
+		i--;
+	}
+
+	_string.setCharAtIndex(i, '\0');
+
+	_string.reverse();
+}
+#endif // 0
+
+void preMult(ulongnum& lhs, ulongnum& rhs) {
+
+	int indLhs = lhs._string.getLength();
+	int indRhs = rhs._string.getLength();
+
+	if (indLhs < indRhs) {
+
+		lhs._string.reverse();
+		int i = indLhs;
+		while (i < indRhs) {
+
+			lhs._string = lhs._string + '0';
+			i++;
+		}
+		indLhs = i;
+		lhs._string.reverse();
+
+	}
+	else if (indRhs < indLhs) {
+
+		rhs._string.reverse();
+		int i = indRhs;
+		while (i < indLhs) {
+
+			rhs._string = rhs._string + '0';
+			i++;
+		}
+		indRhs = i;
+		rhs._string.reverse();
+
+	}
+
+	//To make strings of even length
+	if (indLhs % 2 != 0) {
+		lhs._string.reverse();
+		lhs._string = lhs._string + '0';
+		indLhs++;
+		lhs._string.reverse();
+	}
+
+	if (indRhs % 2 != 0) {
+		rhs._string.reverse();
+		rhs._string = rhs._string + '0';
+		indRhs++;
+		rhs._string.reverse();
+	}
+
+
+}
+
+bool ulongnum::compare(const char* ch) const {
+
+
+}
 
 
 //EOF

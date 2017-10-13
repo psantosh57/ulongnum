@@ -23,7 +23,7 @@ All includes here
 /*--------------------------------------------------------
 local to this file. Change verbose = true for debugging
 ----------------------------------------------------------*/
-static bool verbose = true;
+static bool verbose = false;
 
 /*----------------------------------------------------------------
 CANNOT CHANGE ANYTHING IN THIS FILE
@@ -34,6 +34,9 @@ test multiplication
 -----------------------------------------------------------------*/
 
 static void test_multiplication() {
+
+#if 0
+
 	ulongnum a(789, verbose);
 	cout << "a = " << a << endl;
 	ulongnum b("56", verbose);
@@ -42,7 +45,8 @@ static void test_multiplication() {
 	cout << "ans = " << ans << endl;
 	assert(ans == 44184);
 
-#if 0
+#endif 0
+
 	ulongnum rsa129("114381625757888867669235779976146612010218296721242362562561842935706935245733897830597123563958705058989075147599290026879543541", verbose);
 	ulongnum p1("3490529510847650949147849619903898133417764638493387843990820577", verbose);
 	ulongnum p2("32769132993266709549961988190834461413177642967992942539798288533", verbose);
@@ -51,7 +55,6 @@ static void test_multiplication() {
 	cout << "p2 = " << p2 << endl;
 	cout << "p1p2 = " << p1p2 << endl;
 	assert(p1p2 == rsa129);
-#endif // 0
 
 }
 #if 0
@@ -85,6 +88,9 @@ static void test_basic() {
 	ta = b;
 	cout << "ta = " << ta << endl;
 }
+
+#endif // 0
+
 /*----------------------------------------------------------------
 test factorial
 -----------------------------------------------------------------*/
@@ -120,7 +126,6 @@ static void test_factorial() {
 	}
 }
 
-#endif // 0
 
 
 
@@ -130,8 +135,8 @@ main
 int main() {
   //test_basic();
   //test_addition();
-  test_multiplication();
-  //test_factorial();
+ // test_multiplication();
+   test_factorial();
 
 #if 0
   ulongnum a(9789, verbose);
@@ -147,17 +152,26 @@ int main() {
 
 	  a + 78 + b + c = " << sum << endl;
 
+  ulongnum c100;
+  c100.set_display(false);
+  clock_t start = clock();
+  c100.factorial(1000);
+  clock_t end = clock();
+  double d = double(end - start) / CLOCKS_PER_SEC;
+  cout << "Time needed = "<< d << endl;
 
 
-  ulongnum a(1234, verbose);
+
+
+  ulongnum a("3490529510847650949147849619903898133417764638493387843990820577", verbose);
   cout << "a = " << a << endl;
-  ulongnum b("4321", verbose);
+  ulongnum b("3276913299326670954996198819083446141317764296799294253979828853", verbose);
   cout << "b = " << b << endl;
   ulongnum ans = a * b;
   cout << "ans = " << ans << endl;
 
-#endif 0
 
+#endif 0
   return 0;
 }
 
