@@ -129,6 +129,7 @@ public:
 
 	friend bool operator==(const ulongnum& lhs, const char* ch) {
 
+		return (lhs.compare(ch));
 
 	}
 
@@ -141,8 +142,6 @@ public:
 	friend ulongnum operator*(ulongnum& lhs, ulongnum& rhs) {
 
 		ulongnum result(0, lhs._display);
-
-		//preMult(lhs, rhs);
 
 		result = multAlgo(lhs, rhs);
 		//result.mult(lhs, rhs);
@@ -160,12 +159,10 @@ public:
 	ulongnum mult(const ulongnum& lhs, const ulongnum& rhs);
 	friend ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs);
 	int getLen() { return _string.getLength(); };
-	//void compute(int num);
 	ulongnum factorial(ulongnum n);
 	void set_display(bool val) {  _display = val; };
 	void addZeros(int limit);
 	friend void preMult(ulongnum& lhs, ulongnum& rhs);
-	//void stripZeros();
 
 private:
   bool _display;

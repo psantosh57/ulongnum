@@ -109,6 +109,7 @@ static void test_factorial() {
 		double d = double(end - start) / CLOCKS_PER_SEC;
 		cout << "Run time for !100 = " << " is " << d << " secs" << endl;
 	}
+#if 0
 
 	//http://justinwhite.com/big-calc/1000.html
 	{
@@ -124,6 +125,8 @@ static void test_factorial() {
 		double d = double(end - start) / CLOCKS_PER_SEC;
 		cout << "Run time for !1000 = " << " is " << d << " secs" << endl;
 	}
+#endif // 0
+
 }
 
 
@@ -136,7 +139,7 @@ int main() {
   //test_basic();
   //test_addition();
  // test_multiplication();
-   test_factorial();
+  test_factorial();
 
 #if 0
   ulongnum a(9789, verbose);
@@ -171,7 +174,12 @@ int main() {
   cout << "ans = " << ans << endl;
 
 
+
+  ulongnum s1("abced", verbose);
+  const char* str = "abcd";
+  assert(s1 == str);
 #endif 0
+
   return 0;
 }
 

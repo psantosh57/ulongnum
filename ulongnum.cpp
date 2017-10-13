@@ -46,10 +46,6 @@ void ulongnum::add(const ulongnum& lhs, const ulongnum& rhs) {
 	int indLhs = lhs._string.getLength()-1;
 	int indRhs = rhs._string.getLength()-1;
 
-
-	cout << "Lhs = " << indLhs << endl;
-	cout << "Rhs = " << indRhs << endl;
-
 	int carry = 0;
 	int result = 0;
 
@@ -270,7 +266,6 @@ ulongnum ulongnum::mult(const ulongnum& lhs, const ulongnum& rhs) {
 	int indRhsMax = rhs._string.getLength() - 1;
 	int indLhsMax = indLhs;
 	int indRhs = indRhsMax;
-	//ulongnum temp(0, true);
 	int carry = 0;
 	int result = 0;
 
@@ -409,7 +404,7 @@ ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 	int indLhs = lhs1._string.getLength();
 	int indRhs = rhs1._string.getLength();
 
-	if (indLhs <= 4 && indRhs <= 4) {
+	if (indLhs <= 10 && indRhs <= 10) {
 		ulongnum temp(0, false);
 		temp = temp.mult(lhs1, rhs1);
 		temp._string.stripZeros();
@@ -419,8 +414,6 @@ ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 	else {
 		int mid = 0;
 		(indLhs > indRhs) ? mid = ((indLhs + 1) / 2) : mid = ((indRhs + 1) / 2);
-		//int midLhs = (indLhs + 1) / 2;
-		//int midRhs = (indRhs + 1) / 2;
 		int n = mid;
 
 		//To make strings of equal length
@@ -485,58 +478,29 @@ ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 		int lenTemp4 = temp1._string.getLength();
 
 		//Base case of recursive function - when len = 2, use default mult
-#if 0
-		if (lenTemp1 <= 4) {
 
-			//ulongnum product(0, verbose);
-			ulongnum a(0, verbose);
-			ulongnum b1(0, verbose);
-			ulongnum b2(0, verbose);
-			ulongnum b(0, verbose);
-			ulongnum c(0, verbose);
+		//Call this function recursively
+		 ulongnum XhYh(0, verbose);		    
+		ulongnum XhYl(0, verbose);			
+		ulongnum XlYh(0, verbose);			
+		ulongnum XlYl(0, verbose);			
+		ulongnum b1(0, verbose);
+		ulongnum product(0, verbose);
 
-			a.mult(temp1, temp3);
-			a.addZeros((2 * n));
-			b1.mult(temp1, temp4);
-			b2.mult(temp2, temp3);
-			b = b1 + b2;
-			b.addZeros(n);
-			c.mult(temp2, temp4);
+		XhYh = multAlgo(temp1, temp3);
+		XhYl = multAlgo(temp1, temp4);
+		XlYh = multAlgo(temp2, temp3);
+		XlYl = multAlgo(temp2, temp4);
 
-			//product = a + b + c;
-			//product._string.stripZeros();
+		XhYh.addZeros((2 * n));
+		b1 = XhYl + XlYh;
+		b1.addZeros(n);
 
-			*this = a + b + c;
-			_string.stripZeros();
+		product = XhYh + b1 + XlYl;
+		product._string.stripZeros();
+		return product;
 
-			return *this;
-		}
-#endif // 0
-
-		//else {
-
-			//Call this function recursively
-		    ulongnum XhYh(0, verbose);		    
-			ulongnum XhYl(0, verbose);			
-			ulongnum XlYh(0, verbose);			
-			ulongnum XlYl(0, verbose);			
-			ulongnum b1(0, verbose);
-			ulongnum product(0, verbose);
-
-			XhYh = multAlgo(temp1, temp3);
-			XhYl = multAlgo(temp1, temp4);
-			XlYh = multAlgo(temp2, temp3);
-			XlYl = multAlgo(temp2, temp4);
-
-			XhYh.addZeros((2 * n));
-			b1 = XhYl + XlYh;
-			b1.addZeros(n);
-
-			product = XhYh + b1 + XlYl;
-			product._string.stripZeros();
-			return product;
-
-		//}
+		
 
 	}
 
@@ -544,17 +508,6 @@ ulongnum multAlgo(const ulongnum& lhs, const ulongnum& rhs) {
 
 ulongnum ulongnum::factorial(ulongnum n) {
 
-
-#if 0
-	if (*this == n) {
-
-		return *this;
-	}
-	else {
-		ulongnum temp = (*this + 1);
-		*this = *this*temp.factorial(temp);
-	}
-#endif // 0
 	ulongnum temp(*this+1);
 	while (temp != (n+1)) {
 		*this = *this*temp;
@@ -574,24 +527,6 @@ void ulongnum::addZeros(int limit) {
 	}
 
 }
-
-#if 0
-void ulongnum::stripZeros() {
-
-	int count = 0;
-	_string.reverse();
-	int i = _string.getLength();
-	while (_string.getChar(i - 1) == '0') {
-
-		count++;
-		i--;
-	}
-
-	_string.setCharAtIndex(i, '\0');
-
-	_string.reverse();
-}
-#endif // 0
 
 void preMult(ulongnum& lhs, ulongnum& rhs) {
 
@@ -645,7 +580,27 @@ void preMult(ulongnum& lhs, ulongnum& rhs) {
 
 bool ulongnum::compare(const char* ch) const {
 
+	int uLongLen = _string.getLength();
+	int strLen = strlen(ch);
 
+	if (uLongLen != strLen) {
+
+		return false;
+	}
+	else {
+		int i = 0;
+		while (ch[i] != '\0') {
+
+			if (_string.getChar(i) != ch[i]) {
+
+				return false;
+			}
+			i++;
+		}
+
+		return true;
+
+	}
 }
 
 
