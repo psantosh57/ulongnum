@@ -22,7 +22,7 @@ WRITE CODE IN THIS FILE
 
 void str::reverse() {
 
-	for (int i = 0, j = (_strlen - 1); i < j; ++i, --j) {
+	for (int i = 0, j = (_strlen-1); i < j; ++i, --j) {
 
 		char tempCh = _string[i];
 		_string[i] = _string[j];
@@ -120,18 +120,6 @@ bool str::ifZero() {
 	}
 
 	return true;
-
-}
-
-void str::insertZeros(int index) {
-
-	for (int i = 0; i < index; ++i) {
-
-		char ch = _string[i];
-		_string[i] = '0';
-		_string[i + 1] = ch;
-
-	}
 
 }
 

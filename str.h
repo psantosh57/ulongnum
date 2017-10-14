@@ -22,7 +22,7 @@ class str {
 public:
    //WRITE CODE HERE
 
-	str(char ch, bool verbose) :_string(2, verbose), _display(verbose), _strlen(1) {
+	str(char ch, bool verbose = false) :_string(2, verbose), _display(verbose), _strlen(1) {
 
 		if (_display) {
 
@@ -189,7 +189,7 @@ public:
 		int index = (sum._strlen - 1);
 		sum._string[index++] = ch;
 		sum._string[index] = '\0';
-
+		
 		return sum;
 
 	}
@@ -235,7 +235,6 @@ public:
 	void setCharAtIndex(int index, const char ch);
 	void stripZeros();
 	bool ifZero();
-	void insertZeros(int index);
 
 
 private:

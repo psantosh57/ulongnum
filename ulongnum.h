@@ -32,7 +32,7 @@ public:
 		int2String(n);
 	}
 
-	ulongnum() : _string("1", true), _display(true), _set(false) {
+	ulongnum() : _string("1", false), _display(false), _set(false) {
 
 		if (_display) {
 
@@ -42,7 +42,7 @@ public:
 
 	}
 
-	ulongnum(const char* ch, bool verbose) : _string(ch, verbose), _display(verbose) {
+	ulongnum(const char* ch, bool verbose = false) : _string(ch, verbose), _display(verbose) {
 
 		if (_display) {
 
@@ -50,7 +50,7 @@ public:
 		}
 	}
 
-	ulongnum(const char ch, bool verbose) : _string(ch, verbose), _display(verbose) {
+	ulongnum(const char ch, bool verbose = false) : _string(ch, verbose), _display(verbose) {
 
 		if (_display) {
 

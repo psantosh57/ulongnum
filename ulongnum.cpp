@@ -12,7 +12,7 @@ This file has class definition
 All includes here
 -----------------------------------------------------------------*/
 #include "ulongnum.h"
-static bool verbose = true;
+static bool verbose = false;
 /*----------------------------------------------------------------
 
 Definition of routines of ulongnum class
